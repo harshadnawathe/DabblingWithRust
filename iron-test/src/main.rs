@@ -1,13 +1,24 @@
 extern crate iron;
+extern crate rustc_serialize;
 
 use iron::prelude::*;
 use iron::status;
+use rustc_serialize::json;
+
+
+#[derive(RustcDecodable,RustcEncodable)]
+struct Greeting {
+  msg: String
+}
 
 fn main() {
-    fn hello_world(_: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, "Hello World!")))
+  fn hello_world(_: &mut Request) -> IronResult<Response> {
+        let greeting = Greeting { msg: "Hello, World".to_string() };
+        let payload = json::encode(&greeting).unwrap();
+        Ok(Response::with((status::Ok, payload)))
     }
 
-    Iron::new(hello_world).http("0.0.0.0:3000").unwrap();
-    println!("On 3000");
+  println!("On 3000");
+  Iron::new(hello_world).http("0.0.0.0:3000").unwrap();
+  
 }
