@@ -18,7 +18,7 @@ fn main() {
         Ok(Response::with((status::Ok, payload)))
     }
 
-  println!("On 3000");
-  Iron::new(hello_world).http("0.0.0.0:3000").unwrap();
+  println!("On 3994");
+  Iron::new(hello_world).http("0.0.0.0:3994").unwrap();
   
 }
